@@ -46,11 +46,12 @@
   "use strict";
 
   /*
-  1. Необходимо сделать так, чтобы при клике на элемент с классом "nav-link",
-  данному элементу ставился класс "active", при этом у всех других элементов с
-  классом nav-link данных элемент отсутствовал, необходимо использовать
-  делегирование события.
-  Также необходимо чтобы в div с классом text ставился нужный текст, который
+  1.
+  1 Необходимо сделать так, чтобы при клике на элемент с классом "nav-link",
+  данному элементу ставился класс "active"
+  2 при этом у всех других элементов с классом nav-link данных элемент отсутствовал
+  3 необходимо использовать делегирование события.
+  4 необходимо чтобы в div с классом text ставился нужный текст, который
   прописан в объекте panelText (вам необходимо определить самостоятельно, что
   общего между данной в html версткой и объектом ниже).
   */
@@ -59,15 +60,34 @@
     X6: "Знаю, программирование это нелегко.",
     H99: "Однако, программирование, в итоге, принесет свои плоды.",
   };
+  let activeLinkEl = document.querySelector('.active');
+  const textDivEl = document.querySelector('.text');
+  document.querySelector('.nav-tabs').addEventListener('click', event => {
+    if (!event.target.classList.contains('nav-link')) {
+      return;
+    }
 
+    activeLinkEl.classList.remove('active');
+    event.target.classList.add('active');
+    activeLinkEl = event.target;
+
+    textDivEl.textContent = panelText[event.target.parentElement.dataset.text];
+  });
 
   /*
-  2. Необходимо сделать так, чтобы при изменении input'а менялся и размер шрифта
-  у элемента с id="inputDiv". Перемещение ползунка должно плавно увеличивать
+  2. 
+  1 Необходимо сделать так, чтобы при изменении input'а менялся и размер шрифта
+  у элемента с id="inputDiv". 
+  2 Перемещение ползунка должно плавно увеличивать
   шрифт у текста, никакого резкого увеличения шрифта не должно быть при
   перетаскивании ползунка.
    */
-
+   const divEl = document.getElementById('inputDiv');
+  const inputEl = document.querySelector('input');
+  inputEl.value = Number.parseInt(getComputedStyle(divEl).fontSize).toString();
+  inputEl.addEventListener('input', event => {
+    divEl.style.fontSize = `${event.target.value}px`;
+  });
 
 </script>
 </body>
